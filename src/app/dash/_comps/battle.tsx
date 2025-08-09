@@ -1,9 +1,11 @@
-import type { Monster, MonsterUser, Buff } from "@/app/@types";
+import type { Monster, MonsterUser, Buff, Effect } from "@/app/@types";
 import { cn } from "@/app/utils/styles";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BattleButton } from "./battle-button";
 import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
+import * as effects from "@/app/services/effects";
+import { doEffect, stopEffect } from "@/app/services/effects";
 
 export default function Battle({
   monsterUser,
@@ -17,16 +19,11 @@ export default function Battle({
     debuffs: Buff[];
   };
 }) {
-  const [boosting, setBoosting] = useState(false);
+  const healEffect = effects.getHealEffect(useState<boolean>(false));
+  const boostEffect = effects.getBoostEffect(useState<boolean>(false));
   const boostCss = useMemo(() => {
-    return boosting ? "animate-pulse" : "-";
-  }, [boosting]);
-
-  const healingCss = 'animate-bounce';
-  const onHeal = () => {
-    console.log('onHeal');
-
-  }
+    return boostEffect.state?.[0] ? "animate-pulse" : "-";
+  }, [boostEffect.state]);
 
   const onConcede = () => {
     const confirmed = confirm('Concede?');
@@ -53,7 +50,7 @@ export default function Battle({
               className={cn(
                 "w-48 h-48 object-contain",
                 boostCss,
-                healingCss,
+                healEffect.state?.[0] ? 'animate-bounce' : '',
               )}
             />
           </li>
@@ -117,14 +114,11 @@ export default function Battle({
         <BattleButton
           variant="neutral"
           cooldown={5000}
-          onClick={() => {
-            setBoosting(true);
-          }}
           onCooldownStart={() => {
-            setBoosting(true);
+            doEffect(boostEffect);
           }}
           onCooldownEnd={() => {
-            setBoosting(false);
+            stopEffect(boostEffect);
           }}
         >
           Boost
@@ -134,7 +128,7 @@ export default function Battle({
           variant="neutral"
           cooldown={10 * 1000}
           onCooldownStart={() => {
-            onHeal();
+            doEffect(healEffect);
           }}
         >
           Heal
