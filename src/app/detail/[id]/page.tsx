@@ -18,7 +18,10 @@ export default function Detail() {
   const namedCss = '!grayscale-0';
 
   useEffect(() => {
-    const m = ldb.getMonster(id as string);
+    const m = (
+      ldb.getFirstPick()
+      ?? ldb.getMonster(id as string)
+    );
     setMonster(m);
     setMyName(m?.myname ?? '');
   }, [id]);
@@ -89,14 +92,9 @@ export default function Detail() {
           variant="default"
           className="cursor-pointer"
           disabled={!myname}
-          onMouseOver={() => {
+          onMouseDown={() => {
             setTimeout(() => {
               setBattleHover(true);
-            }, 100);
-          }}
-          onMouseLeave={() => {
-            setTimeout(() => {
-              setBattleHover(false);
             }, 100);
           }}
         >
