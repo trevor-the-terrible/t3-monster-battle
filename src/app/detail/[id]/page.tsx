@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import NextLink from "next/link";
-import ldb from "@/app/services/ldb";
-import { cn } from "@/app/utils/styles";
-import { useParams } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { type MonsterUser } from "@/app/@types";
-import { useDebouncedCallback } from "use-debounce";
+import { useState, useEffect } from 'react';
+import NextLink from 'next/link';
+import ldb from '@/app/services/ldb';
+import { cn } from '@/app/utils/styles';
+import { useParams } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { type MonsterUser } from '@/app/@types';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function Detail() {
   const { id } = useParams();
@@ -18,10 +18,10 @@ export default function Detail() {
   const namedCss = '!grayscale-0';
 
   useEffect(() => {
-    const m = (
+    const m =
       ldb.getFirstPick()
       ?? ldb.getMonster(id as string)
-    );
+    ;
     setMonster(m);
     setMyName(m?.myname ?? '');
   }, [id]);
@@ -33,6 +33,7 @@ export default function Detail() {
 
     ldb.setFirstPick({
       ...monster,
+      id: `u_${String(monster.id).replace(/^u_/, '')}`,
       myname: myname.trim(),
     });
   }, 100);
@@ -59,7 +60,7 @@ export default function Detail() {
         />
 
         {
-          battleHover && (
+          battleHover &&
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -73,7 +74,7 @@ export default function Detail() {
                 )}
               />
             </>
-          )
+
         }
       </div>
 
@@ -87,7 +88,7 @@ export default function Detail() {
         }}
       />
 
-      <NextLink href={`/dash`} >
+      <NextLink href={'/dash'} >
         <Button
           variant="default"
           className="cursor-pointer"

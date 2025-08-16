@@ -20,7 +20,7 @@ export const tryCatch = async <T, E = Error>(
     // console.warn('try:catch:error :>> ', error);
     return [error as E, null];
   }
-}
+};
 
 export default tryCatch;
 

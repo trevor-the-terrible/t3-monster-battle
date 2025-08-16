@@ -1,8 +1,8 @@
 // import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import getName from "@/app/services/get-random-name";
-import type { Monster, PokemonDetail } from "@/app/@types";
-import monsterCloset from "./monster-closet";
+import { createTRPCRouter, publicProcedure } from '@/server/api/trpc';
+import getName from '@/app/services/get-random-name';
+import type { Monster, PokemonDetail } from '@/app/@types';
+import monsterCloset from './monster-closet';
 
 export const pickRouter = createTRPCRouter({
   fetchMonsters: publicProcedure
@@ -15,7 +15,7 @@ export const pickRouter = createTRPCRouter({
         console.warn('cached monsters', cachedMonsters.length);
         return {
           monsters: cachedMonsters,
-        }
+        };
       }
 
       const searchParams = new URLSearchParams({
@@ -42,16 +42,16 @@ export const pickRouter = createTRPCRouter({
           // trailing slash
           const [id] = monster.url.split('/').slice(-2) as [string];
           const details = await fetchMonsterDetails(id);
-          const imageUrl = (
+          const imageUrl =
             details?.sprites?.official
             || details?.sprites?.home
-          );
-          const gifUrl = (
+          ;
+          const gifUrl =
             details?.sprites?.showdown
             || details?.sprites?.shiny
             || details?.sprites?.front
             || details?.sprites?.official
-          );
+          ;
 
           return {
             id,
@@ -69,7 +69,7 @@ export const pickRouter = createTRPCRouter({
 
       return {
         monsters,
-      }
+      };
     }),
 });
 

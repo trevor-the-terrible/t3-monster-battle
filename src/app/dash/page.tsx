@@ -1,11 +1,11 @@
 'use client';
 
-import { page, cn } from "@/app/utils/styles";
-import { useRouter } from "next/navigation";
-import ldb, { type BattleHistory } from "@/app/services/ldb";
-import { useState, useEffect } from "react";
+import { page, cn } from '@/app/utils/styles';
+import { useRouter } from 'next/navigation';
+import ldb, { type BattleHistory } from '@/app/services/ldb';
+import { useState, useEffect } from 'react';
 import { Loader } from '../_components/loader';
-import type { Monster, MonsterUser } from "@/app/@types";
+import type { Monster, MonsterUser } from '@/app/@types';
 import { Button } from '@/components/ui/button';
 import NextLink from 'next/link';
 import Battle from './_comps/battle';
@@ -44,7 +44,7 @@ export default function Dash() {
     return (
       <div className={cn(page)}>
         {
-          shadowMonster && (
+          shadowMonster &&
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -53,7 +53,7 @@ export default function Dash() {
                 className="w-32 object-contain brightness-[0]"
               />
             </>
-          )
+
         }
 
         <p className="text-center">
@@ -70,7 +70,7 @@ export default function Dash() {
   return (
     <div className={cn(page, 'p-12')}>
       {
-        activeBattles.map(battle => (
+        activeBattles.map(battle =>
           <Battle
             key={battle.id}
             monsterUser={firstPick}
@@ -80,7 +80,7 @@ export default function Dash() {
               debuffs: [],
             }}
           />
-        ))
+        )
       }
     </div>
   );

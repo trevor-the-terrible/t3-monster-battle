@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/app/utils/styles";
-import { useEffect, useState, useMemo } from "react";
+import { Button } from '@/components/ui/button';
+import { cn } from '@/app/utils/styles';
+import { useEffect, useState, useMemo } from 'react';
 
 export const BattleButton = (props: React.ComponentProps<typeof Button> & {
-  variant?: "neutral" | "default";
+  variant?: 'neutral' | 'default';
   onClick?: () => void;
 
   // in ms
@@ -42,8 +42,8 @@ export const BattleButton = (props: React.ComponentProps<typeof Button> & {
 
   return (
     <Button
-      variant={props.variant ?? "neutral"}
-      className={cn("cursor-pointer", props.className)}
+      variant={props.variant ?? 'neutral'}
+      className={cn('cursor-pointer', props.className)}
       disabled={cooldown > 0}
       {...safeProps}
       onClick={() => {
@@ -58,11 +58,11 @@ export const BattleButton = (props: React.ComponentProps<typeof Button> & {
     >
       {props.children}
 
-      {cooldown > 0 && (
+      {cooldown > 0 &&
         <span className="text-xs text-red-500">
           {cooldown / 1000}s
         </span>
-      )}
+      }
     </Button>
   );
 };

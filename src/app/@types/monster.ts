@@ -1,8 +1,6 @@
-export type MonsterUser = Monster & {
-  myname: string;
-}
+import type { Effect } from './effects';
 
-export type PokeMonster = {
+export type SourceMonster = {
   id: string;
   name: string;
   url: string;
@@ -19,6 +17,27 @@ export type PokeMonster = {
   };
 }
 
-export type Monster = PokeMonster & {
+export type BaseStats = {
+  hp: number;
+  speed: number;
+
+  dmg: [number, number];
+  def: number;
+
+  hit: number;
+  evasion: number;
+
+  power: number;
+  effects: Effect[];
+}
+
+export type Monster = SourceMonster & {
   mysteryName: string;
+  baseStats: BaseStats;
+  currentStats: BaseStats;
+  effects: Map<string, Effect>
+}
+
+export type MonsterUser = Monster & {
+  myname: string;
 }

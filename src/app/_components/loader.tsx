@@ -1,12 +1,10 @@
 export const Loader = (props: { children?: React.ReactNode, message?: string }) => {
   const { children, message } = props;
-  const loadingContent = (
-    children ?? (
+  const loadingContent =
+    children ??
       <p className="mt-4 text-lg text-gray-600">
         {message ?? 'Loading...'}
-      </p>
-    )
-  )
+      </p>;
 
   return (
     <div className={`

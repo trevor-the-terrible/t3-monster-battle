@@ -33,6 +33,20 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
+      'no-multiple-empty-lines': ['error', {
+        max: 1,
+        maxBOF: 0,
+      }],
+      'object-curly-newline': ['error', {
+        consistent: true,
+      }],
+      'semi': ['error', 'always'],
+      'quotes': ['error', 'single'],
+      'no-multi-spaces': ['error'],
+      'no-trailing-spaces': ['error'],
+      'no-extra-semi': ['error'],
+      'no-extra-boolean-cast': ['error'],
+      'no-extra-parens': ['error'],
     },
   },
   {

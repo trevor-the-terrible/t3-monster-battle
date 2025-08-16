@@ -1,1 +1,1 @@
-export * from "@/app/utils/styles/tw-merge";
+export * from '@/app/utils/styles/tw-merge';

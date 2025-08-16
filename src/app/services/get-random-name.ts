@@ -1,4 +1,4 @@
-import { species } from "fantastical";
+import { species } from 'fantastical';
 
 const speciesNames = Object.keys(species);
 const sexes: Sex[] = ['male', 'female'];

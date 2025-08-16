@@ -1,5 +1,5 @@
-import { HydrateClient } from "@/trpc/server";
-import PickPage from "./pick/page";
+import { HydrateClient } from '@/trpc/server';
+import PickPage from './pick/page';
 
 export default async function Home() {
   return (

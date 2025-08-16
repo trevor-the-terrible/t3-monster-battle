@@ -1,9 +1,9 @@
-import type { Effect } from "@/app/@types";
+import type { Effect } from '@/app/@types';
 
 export const stopEffect = (effect: Effect) => {
   console.log('stopEffect', effect.id, effect.duration);
   effect.onEnd();
-}
+};
 
 export const doEffect = (effect: Effect) => {
   console.log('doEffect', effect.id, effect.duration);
@@ -16,4 +16,4 @@ export const doEffect = (effect: Effect) => {
   setTimeout(() => {
     stopEffect(effect);
   }, effect.duration);
-}
+};

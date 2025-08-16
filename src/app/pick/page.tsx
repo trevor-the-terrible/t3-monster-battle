@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { api } from "@/trpc/react";
+import { useEffect, useState } from 'react';
+import { api } from '@/trpc/react';
 import { ChevronRight } from 'lucide-react';
-import NextLink from "next/link";
-import { type Monster } from "@/app/@types";
-import { Loader } from "@/app/_components/loader";
-import ldb from "@/app/services/ldb";
-import { Button } from "@/components/ui/button";
+import NextLink from 'next/link';
+import { type Monster } from '@/app/@types';
+import { Loader } from '@/app/_components/loader';
+import ldb from '@/app/services/ldb';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
-} from "@/components/ui/card"
+} from '@/components/ui/card';
 
 export default function Pick() {
   const [monsters, setMonsters] = useState<Monster[]>([]);
@@ -83,12 +83,12 @@ export default function Pick() {
         `}
       >
         {
-          !availablePicks?.[0] && (
+          !availablePicks?.[0] &&
             <Loader message="Catching some monsters..." />
-          )
+
         }
 
-        {availablePicks.map((monster) => (
+        {availablePicks.map((monster) =>
           <Card
             onClick={() => handleSelect(monster)}
             key={monster.id}
@@ -121,10 +121,10 @@ export default function Pick() {
               </h4>
             </CardDescription>
           </Card>
-        ))}
+        )}
       </div>
 
-      {monsters?.[0] && (
+      {monsters?.[0] &&
           <NextLink
             href={`/detail/${firstPick?.id}`}
           >
@@ -137,7 +137,7 @@ export default function Pick() {
               disabled={!firstPick}
             >
               {
-                firstPick && (
+                firstPick &&
                   <>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -153,13 +153,13 @@ export default function Pick() {
 
                     Name it!
                   </>
-                )
+
               }
 
               <ChevronRight className="w-10 h-10 inline-block" />
             </Button>
           </NextLink>
-      )}
+      }
     </div>
   );
 }

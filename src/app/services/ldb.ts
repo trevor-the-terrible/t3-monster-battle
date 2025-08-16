@@ -28,12 +28,12 @@ class LocalDB {
     const cachedPicks = localCache.getLocalCache<MonsterUser[]>('picks');
     const picks = cachedPicks?.length
       ? cachedPicks
-      : (
+      :
         Array.from(this.monsterList.values())
         .filter(m => !m.myname)
         .sort(() => Math.random() - 0.5)
         .slice(0, limit)
-      );
+      ;
 
     if (!cachedPicks?.length) {
       localCache.setLocalCache('picks', picks);

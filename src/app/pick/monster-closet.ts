@@ -1,8 +1,8 @@
-import fs from "node:fs/promises";
-import path from "node:path";
-import superJSON from "superjson";
-import type { Monster } from "@/app/@types";
-import tryCatch from "@/lib/try-catch";
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import superJSON from 'superjson';
+import type { Monster } from '@/app/@types';
+import tryCatch from '@/lib/try-catch';
 
 const cachePath = path.join(process.cwd(), 'public', 'cache', 'monsters.json');
 
@@ -28,6 +28,6 @@ export const monsterCloset = {
       console.error(error);
     }
   },
-}
+};
 
 export default monsterCloset;

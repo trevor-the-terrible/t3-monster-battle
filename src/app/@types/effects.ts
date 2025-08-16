@@ -1,10 +1,11 @@
-export type Effect<T = any> = {
+import type { Dispatch, SetStateAction } from 'react';
+
+export type Effect<T = unknown> = {
   id: string;
   icon?: string;
   details?: string;
-  // in ms
   duration: number | 'none';
-  state: [T, (value: T) => void] | null;
-  onStart: () => void;
-  onEnd: () => void;
+  onStart?: () => void;
+  onEnd?: () => void;
+  state?: [T, Dispatch<SetStateAction<T>>];
 }

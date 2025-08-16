@@ -1,11 +1,12 @@
-import type { Monster, MonsterUser, Buff, Effect } from "@/app/@types";
-import { cn } from "@/app/utils/styles";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { BattleButton } from "./battle-button";
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import * as effects from "@/app/services/effects";
-import { doEffect, stopEffect } from "@/app/services/effects";
+import type { Monster, MonsterUser, Buff, Effect } from '@/app/@types';
+import { cn } from '@/app/utils/styles';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { BattleButton } from './battle-button';
+import { useState, useMemo, useEffect, type Dispatch, type SetStateAction } from 'react';
+import { Button } from '@/components/ui/button';
+import * as effects from '@/app/services/effects';
+import { doEffect, stopEffect } from '@/app/services/effects';
+import { startBattle, type BattleEvent } from './battle-engine';
 
 export default function Battle({
   monsterUser,
@@ -19,11 +20,54 @@ export default function Battle({
     debuffs: Buff[];
   };
 }) {
+  const [userCss, setUserCss] = useState<string>('');
+  const [cpuCss, setCpuCss] = useState<string>('');
+  useEffect(() => {
+    const setCssByMonster = (monsterId:string|number, css:string) => {
+      if (monsterId === monsterUser.id) {
+        setUserCss(css);
+        return;
+      }
+      setCpuCss(css);
+    };
+    const getCssByMonster = (monsterId:string|number) => {
+      if (monsterId === monsterUser.id) {
+        return userCss;
+      }
+      return cpuCss;
+    };
+
+    startBattle(monsterUser, monster, (be:BattleEvent) => {
+      const effect = effects.effects.find(ef => ef.id = be.event);
+      if (!effect) {
+        return;
+      }
+      if (effect.id === 'hit') {
+        // add animation
+        setCssByMonster(be.monsterTo.id, 'battle-image-shake');
+
+        if (effect.duration === 'none') {
+          return console.warn('effect:duration:none');
+        }
+
+        // unset animation
+        setTimeout(() => {
+          const css = getCssByMonster(be.monsterTo.id).replace('battle-image-shake', '').trim();
+          setCssByMonster(be.monsterTo.id, css);
+        }, effect.duration);
+        return;
+      }
+    });
+  }, []);
+
   const healEffect = effects.getHealEffect(useState<boolean>(false));
   const boostEffect = effects.getBoostEffect(useState<boolean>(false));
-  const boostCss = useMemo(() => {
-    return boostEffect.state?.[0] ? "animate-pulse" : "-";
+  const boostCssUser = useMemo(() => {
+    return boostEffect.state?.[0] ? 'animate-bounce' : '-';
   }, [boostEffect.state]);
+  const healCssUser = useMemo(() => {
+    return healEffect.state?.[0] ? 'animate-spin' : '-';
+  }, [healEffect.state]);
 
   const onConcede = () => {
     const confirmed = confirm('Concede?');
@@ -32,19 +76,19 @@ export default function Battle({
     }
   };
 
-  const css = `
+  const hitAnimationCss = `
     .battle-image-shake {
       animation: shake 0.5s ease-in-out infinite;
+    }
+
+    .battle-image-violent-shake {
+      animation: violentShake 0.1s ease-in-out infinite;
     }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
       20%, 40%, 60%, 80% { transform: translateX(2px); }
-    }
-
-    .battle-image-violent-shake {
-      animation: violentShake 0.1s ease-in-out infinite;
     }
 
     @keyframes violentShake {
@@ -63,7 +107,7 @@ export default function Battle({
 
   return (
     <Card className="bg-violet-300 w-full">
-      <style>{css}</style>
+      <style>{hitAnimationCss}</style>
 
       <CardHeader>
         <CardTitle className="text-center">
@@ -73,16 +117,22 @@ export default function Battle({
 
       <CardContent>
         <ul className="flex flex-row gap-2 items-center justify-evenly">
-          <li>
+          <li
+            className={cn(
+              boostCssUser,
+              healCssUser,
+            )}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={monsterUser?.gifUrl}
+              _src={monsterUser?.gifUrl}
+              src='m-backup.jpg'
               alt={monsterUser.myname}
               className={cn(
-                "w-48 h-48 object-contain",
-                "transform-gpu transition-all duration-300",
-                boostCss,
-                healEffect.state?.[0] ? 'battle-image-violent-shake' : '',
+                'w-48 h-48 object-contain',
+                'transform-gpu transition-all duration-300',
+                userCss,
+                // ...monsterUser.effects.map(e => e.css),
               )}
             />
           </li>
@@ -118,25 +168,16 @@ export default function Battle({
             </div>
           </li>
 
-          {/* <li>
-            <ul>
-            {
-              details.buffs.concat(details.debuffs).map(buff => (
-                <li key={buff.name}>
-                  {buff.name}
-                </li>
-              ))
-            }
-            </ul>
-            &nbsp;
-          </li> */}
-
           <li>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={monster?.gifUrl}
+              _src={monster?.gifUrl}
+              src='m-backup.jpg'
               alt={monster?.name}
-              className="w-48 h-48 object-contain"
+              className={cn(
+                'w-48 h-48 object-contain',
+                cpuCss,
+              )}
             />
           </li>
         </ul>
