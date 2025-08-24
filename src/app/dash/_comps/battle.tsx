@@ -125,8 +125,10 @@ export default function Battle({
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              _src={monsterUser?.gifUrl}
-              src='m-backup.jpg'
+              src={monsterUser?.gifUrl}
+              onError={(ev) => {
+                ev.currentTarget.src = 'm-backup.jpg';
+              }}
               alt={monsterUser.myname}
               className={cn(
                 'w-48 h-48 object-contain',
@@ -171,8 +173,10 @@ export default function Battle({
           <li>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              _src={monster?.gifUrl}
-              src='m-backup.jpg'
+              src={monster?.gifUrl}
+              onError={(ev) => {
+                ev.currentTarget.src = 'm-backup.jpg';
+              }}
               alt={monster?.name}
               className={cn(
                 'w-48 h-48 object-contain',
