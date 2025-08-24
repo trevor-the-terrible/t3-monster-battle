@@ -123,7 +123,7 @@ const sample = <T = unknown>(array: T[]): T | undefined => {
 };
 
 const initMonster = (monster: Monster) => {
-  monster.currentStats = {
+  monster.baseStats = {
     hp: 25,
     speed: 1000,
     dmg: [1, 10],
@@ -134,6 +134,7 @@ const initMonster = (monster: Monster) => {
     effects: [],
     // ...monster?.currentStats,
   };
+  monster.currentStats = {...monster.baseStats};
 };
 
 type BattleState = {

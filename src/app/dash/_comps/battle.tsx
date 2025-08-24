@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import * as effects from '@/app/services/effects';
 import { doEffect, stopEffect } from '@/app/services/effects';
 import { startBattle, type BattleEvent } from './battle-engine';
+import { Stats } from './stats';
 
 export default function Battle({
   monsterUser,
@@ -22,7 +23,17 @@ export default function Battle({
 }) {
   const [userCss, setUserCss] = useState<string>('');
   const [cpuCss, setCpuCss] = useState<string>('');
+  const [userStats, setUserStats] = useState(monsterUser.currentStats);
+  const [cpuStats, setCpuStats] = useState(monsterUser.currentStats);
+
   useEffect(() => {
+    const setStatsByMonster = (monsterId:string|number, stats:typeof monster.baseStats) => {
+      if (monsterId === monsterUser.id) {
+        setUserStats(stats);
+        return;
+      }
+      setCpuStats(stats);
+    };
     const setCssByMonster = (monsterId:string|number, css:string) => {
       if (monsterId === monsterUser.id) {
         setUserCss(css);
@@ -42,6 +53,7 @@ export default function Battle({
       if (!effect) {
         return;
       }
+
       if (effect.id === 'hit') {
         // add animation
         setCssByMonster(be.monsterTo.id, 'battle-image-shake');
@@ -57,6 +69,9 @@ export default function Battle({
         }, effect.duration);
         return;
       }
+
+      setStatsByMonster(be.monsterFrom.id, be.monsterFrom.currentStats);
+      setStatsByMonster(be.monsterTo.id, be.monsterTo.currentStats);
     });
   }, []);
 
@@ -137,6 +152,10 @@ export default function Battle({
                 // ...monsterUser.effects.map(e => e.css),
               )}
             />
+
+            <Stats
+              stats={userStats}
+            />
           </li>
 
           <li>
@@ -182,6 +201,10 @@ export default function Battle({
                 'w-48 h-48 object-contain',
                 cpuCss,
               )}
+            />
+
+            <Stats
+              stats={userStats}
             />
           </li>
         </ul>
