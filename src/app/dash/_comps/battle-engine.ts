@@ -53,6 +53,8 @@ const watchBattle = (battleState: BattleState) => {
   });
 
   battleState.cleanup();
+
+  alert('battle over');
 };
 
 export const startInterval = (

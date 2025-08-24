@@ -1,4 +1,4 @@
-import type { Monster, MonsterUser, Buff, Effect } from '@/app/@types';
+import type { Monster, MonsterUser, Buff, Effect, BaseStats } from '@/app/@types';
 import { cn } from '@/app/utils/styles';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { BattleButton } from './battle-button';
@@ -25,9 +25,19 @@ export default function Battle({
   const [cpuCss, setCpuCss] = useState<string>('');
   const [userStats, setUserStats] = useState(monsterUser.currentStats);
   const [cpuStats, setCpuStats] = useState(monsterUser.currentStats);
+  const [started, setStarted] = useState<boolean>(false);
 
   useEffect(() => {
-    const setStatsByMonster = (monsterId:string|number, stats:typeof monster.baseStats) => {
+    onStartClick();
+  }, []);
+  const onStartClick = () => {
+    if (started) {
+      return;
+    }
+
+    setStarted(true);
+
+    const setStatsByMonster = (monsterId:string|number, stats:BaseStats) => {
       if (monsterId === monsterUser.id) {
         setUserStats(stats);
         return;
@@ -54,6 +64,11 @@ export default function Battle({
         return;
       }
 
+      if (be.event === 'over') {
+        setStarted(false);
+        return;
+      }
+
       if (effect.id === 'hit') {
         // add animation
         setCssByMonster(be.monsterTo.id, 'battle-image-shake');
@@ -73,7 +88,7 @@ export default function Battle({
       setStatsByMonster(be.monsterFrom.id, be.monsterFrom.currentStats);
       setStatsByMonster(be.monsterTo.id, be.monsterTo.currentStats);
     });
-  }, []);
+  };
 
   const healEffect = effects.getHealEffect(useState<boolean>(false));
   const boostEffect = effects.getBoostEffect(useState<boolean>(false));
@@ -204,13 +219,24 @@ export default function Battle({
             />
 
             <Stats
-              stats={userStats}
+              stats={cpuStats}
             />
           </li>
         </ul>
       </CardContent>
 
       <CardFooter className="flex flex-row gap-2 items-center justify-center">
+        <Button
+          variant="default"
+          onClick={onStartClick}
+          disabled={started}
+          className={cn({
+            'disabled': started,
+          })}
+        >
+          Start
+        </Button>
+
         <BattleButton
           variant="neutral"
           cooldown={5000}
