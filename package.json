@@ -16,6 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@lucide/lab": "0.1.2",
     "@radix-ui/react-slot": "1.2.3",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@t3-oss/env-nextjs": "^0.12.0",
@@ -47,6 +48,8 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.23.0",
     "eslint-config-next": "^15.2.3",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.4",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",

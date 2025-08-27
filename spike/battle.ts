@@ -4,6 +4,20 @@ import { startBattle } from '@/app/dash/_comps/battle-engine';
 const monsterA: Monster = {
   id: '1',
   name: 'Monster A',
+  url: 'https://example.com',
+  imageUrl: 'https://example.com',
+  gifUrl: 'https://example.com',
+  mysteryName: 'Monster A',
+  baseStats: {
+    hp: 25,
+    speed: 3000,
+    dmg: [5, 5],
+    def: 2,
+    hit: 1,
+    evasion: 1,
+    power: 1,
+    effects: new Set(),
+  },
   currentStats: {
     hp: 25,
     speed: 3000,
@@ -12,13 +26,27 @@ const monsterA: Monster = {
     hit: 1,
     evasion: 1,
     power: 1,
-    effects: [],
+    effects: new Set(),
   },
 };
 
 const monsterB: Monster = {
   id: '2',
   name: 'Monster B',
+  url: 'https://example.com',
+  imageUrl: 'https://example.com',
+  gifUrl: 'https://example.com',
+  mysteryName: 'Monster B',
+  baseStats: {
+    hp: 25,
+    speed: 1000,
+    dmg: [1, 5],
+    def: 0,
+    hit: 1,
+    evasion: 2,
+    power: 1,
+    effects: new Set(),
+  },
   currentStats: {
     hp: 25,
     speed: 1000,
@@ -27,10 +55,9 @@ const monsterB: Monster = {
     hit: 1,
     evasion: 2,
     power: 1,
-    effects: [],
+    effects: new Set(),
   },
 };
-
 startBattle(monsterA, monsterB, (event) => {
   const summary: Record<string, number | string> = {};
 
@@ -47,13 +74,10 @@ startBattle(monsterA, monsterB, (event) => {
 
   if (event.event === 'hit') {
     const nameOfMonsterHit =
-      event.monster.name === monsterA.name
-        ? monsterB.name
-        : monsterA.name
-    ;
+      event.monsterTo.name === monsterA.name ? monsterB.name : monsterA.name;
     summary[nameOfMonsterHit] = `${summary[nameOfMonsterHit]} ${icon}`;
   } else {
-    summary[event.monster.name] = `${summary[event.monster.name]} ${icon}`;
+    summary[event.monsterTo.name] = `${summary[event.monsterTo.name]} ${icon}`;
   }
 
   console.table(summary);

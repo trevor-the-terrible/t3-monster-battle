@@ -88,7 +88,7 @@ export default function Detail() {
         }}
       />
 
-      <NextLink href={'/dash'} >
+      <NextLink href={'/dashboard'} >
         <Button
           variant="default"
           className="cursor-pointer"

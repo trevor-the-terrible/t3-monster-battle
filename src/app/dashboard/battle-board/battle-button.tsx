@@ -2,15 +2,18 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/app/utils/styles';
 import { useEffect, useState, useMemo } from 'react';
 
-export const BattleButton = (props: React.ComponentProps<typeof Button> & {
-  variant?: 'neutral' | 'default';
-  onClick?: () => void;
+export const BattleButton = (
+  props: React.ComponentProps<typeof Button> & {
+    variant?: 'neutral' | 'default';
+    onClick?: () => void;
 
-  // in ms
-  cooldown?: number;
-  onCooldownStart?: () => void;
-  onCooldownEnd?: () => void;
-}) => {
+    // in ms
+    cooldown?: number;
+    onCooldownStart?: () => void;
+    onCooldownEnd?: () => void;
+    disabled?: boolean;
+  },
+) => {
   const [cooldown, setCooldown] = useState(0);
   useEffect(() => {
     if (cooldown <= 0) {
@@ -30,12 +33,7 @@ export const BattleButton = (props: React.ComponentProps<typeof Button> & {
   }, [cooldown, props]);
 
   const safeProps = useMemo(() => {
-    const {
-      cooldown,
-      onCooldownStart,
-      onCooldownEnd,
-      ...rest
-    } = props;
+    const { cooldown, onCooldownStart, onCooldownEnd, ...rest } = props;
 
     return rest;
   }, [props]);
@@ -44,7 +42,7 @@ export const BattleButton = (props: React.ComponentProps<typeof Button> & {
     <Button
       variant={props.variant ?? 'neutral'}
       className={cn('cursor-pointer', props.className)}
-      disabled={cooldown > 0}
+      disabled={props.disabled || cooldown > 0}
       {...safeProps}
       onClick={() => {
         if (cooldown > 0) {
@@ -58,11 +56,9 @@ export const BattleButton = (props: React.ComponentProps<typeof Button> & {
     >
       {props.children}
 
-      {cooldown > 0 &&
-        <span className="text-xs text-red-500">
-          {cooldown / 1000}s
-        </span>
-      }
+      {cooldown > 0 && (
+        <span className='text-xs text-red-500'>{cooldown / 1000}s</span>
+      )}
     </Button>
   );
 };

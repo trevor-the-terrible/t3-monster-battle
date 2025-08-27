@@ -1,9 +1,9 @@
-import { type BaseStats } from '@/app/@types';
+import { type MonsterStats } from '@/app/@types';
 
 export function Stats({
   stats
 }: {
-  stats: BaseStats,
+  stats?: MonsterStats,
 }) {
   if (!stats) {
     return (

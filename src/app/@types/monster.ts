@@ -17,8 +17,9 @@ export type SourceMonster = {
   };
 }
 
-export type BaseStats = {
+export type MonsterStats = {
   hp: number;
+  maxHp: number;
   speed: number;
 
   dmg: [number, number];
@@ -28,14 +29,13 @@ export type BaseStats = {
   evasion: number;
 
   power: number;
-  effects: Effect[];
+  effects: Set<string>;
 }
 
 export type Monster = SourceMonster & {
   mysteryName: string;
-  baseStats: BaseStats;
-  currentStats: BaseStats;
-  effects: Map<string, Effect>
+  baseStats: MonsterStats;
+  currentStats: MonsterStats;
 }
 
 export type MonsterUser = Monster & {

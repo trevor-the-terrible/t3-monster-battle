@@ -1,0 +1,20 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "sameLine": false,
+  "jsxBracketSameLine": false,
+  "jsxSingleQuote": true,
+  "objectWrap": "preserve",
+  "quoteProps": "as-needed",
+  "singleAttributePerLine": true,
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "pluginSearchDirs": false,
+  "tailwindPreserveWhitespace": true,
+  "tailwindFunctions": ["cn"]
+}
