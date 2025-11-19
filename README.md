@@ -25,3 +25,28 @@ Via NPM
 npm i;
 npm run dev;
 ```
+
+# Structure
+> Deviations from T3 Stack.
+
+### src
+- app
+  - [Page]
+    - page.tsx (root content)
+    - router.ts (related tRPC api calls)
+  - utils (utils for app folder)
+- @types (types for app)
+- shadcn (shadcn installed components)
+- utils (utils for project)
+- spike (code used for exploring concepts)
+
+# TODO
+- [ ] Finish implementing game loop (win/lose/retry)
+  - Add money + points
+  - Select more than one monster
+  - Add a fail state: out of money + out of monsters
+- [ ] Add cypress E2E tests
+- [ ] Add SVG based animations
+  - hit
+  - heal
+- [ ] Try out hosting + deployment
