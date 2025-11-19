@@ -1,5 +1,3 @@
-import type { Effect } from './effects';
-
 export type SourceMonster = {
   id: string;
   name: string;
