@@ -1,3 +1,9 @@
+/**
+ * I initially tested here to balance starting stats.
+ * I had hoped to build the engine outside of react.
+ * But it became unreliable when pushing state back into the engine.
+ */
+
 // import type { Monster } from '@/app/@types';
 // import { startBattle } from '@/app/dash/_comps/battle-engine';
 
