@@ -1,16 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import NextLink from 'next/link';
 import ldb from '@/app/services/ldb';
 import { cn } from '@/app/utils/styles';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { type MonsterUser } from '@/app/@types';
 import { useDebouncedCallback } from 'use-debounce';
 
 export default function Detail() {
+  const router = useRouter();
   const { id } = useParams();
   const [myname, setMyName] = useState('');
   const [battleHover, setBattleHover] = useState(false);
@@ -18,10 +18,7 @@ export default function Detail() {
   const namedCss = '!grayscale-0';
 
   useEffect(() => {
-    const m =
-      ldb.getFirstPick()
-      ?? ldb.getMonster(id as string)
-    ;
+    const m = ldb.getFirstPick() ?? ldb.getMonster(id as string);
     setMonster(m);
     setMyName(m?.myname ?? '');
   }, [id]);
@@ -41,13 +38,22 @@ export default function Detail() {
     debouncedPersist();
   }, [myname, monster, debouncedPersist]);
 
+  const toDashboard = () => {
+    setBattleHover(true);
+    setTimeout(() => {
+      router.push('/dashboard');
+    }, 750);
+  };
+
   return (
-    <div className="
-      h-screen w-screen
-      flex flex-col items-center justify-center
-      gap-4
-    ">
-      <div className="relative w-full flex items-center justify-center">
+    <div
+      className='
+        flex h-screen
+        w-screen flex-col items-center justify-center
+        gap-4
+      '
+    >
+      <div className='relative flex w-full items-center justify-center'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={monster?.imageUrl}
@@ -59,49 +65,58 @@ export default function Detail() {
           )}
         />
 
-        {
-          battleHover &&
-            <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={monster?.imageUrl}
-                alt={myname || monster?.name}
-                className={cn(
-                  'max-w-1/2 object-contain transition-all duration-1000',
-                  'grayscale-200',
-                  myname ? namedCss : '',
-                  'absolute animate-ping'
-                )}
-              />
-            </>
-
-        }
+        {battleHover && (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={monster?.imageUrl}
+              alt={myname || monster?.name}
+              className={cn(
+                'max-w-1/2 object-contain transition-all duration-1000',
+                'grayscale-200',
+                myname ? namedCss : '',
+                'absolute animate-ping',
+              )}
+            />
+          </>
+        )}
       </div>
 
-      <Input
-        type="text"
-        placeholder={`Name your monster! ...${monster?.mysteryName}?`}
-        className="w-1/2"
-        value={myname}
-        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setMyName(e.currentTarget.value);
-        }}
-      />
+      <div
+        className='
+          flex w-full justify-center
+        '
+        onKeyUp={(ev) => {
+          if (ev.key !== 'Enter') {
+            return;
+          }
 
-      <NextLink href={'/dashboard'} >
-        <Button
-          variant="default"
-          className="cursor-pointer"
-          disabled={!myname}
-          onMouseDown={() => {
-            setTimeout(() => {
-              setBattleHover(true);
-            }, 100);
+          toDashboard();
+        }}
+      >
+        <Input
+          type='text'
+          autoFocus
+          placeholder={`Name your monster! ...${monster?.mysteryName}?`}
+          className='w-1/2'
+          value={myname}
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setMyName(e.currentTarget.value);
           }}
-        >
-          Battle!
-        </Button>
-      </NextLink>
+        />
+      </div>
+
+      <Button
+        variant='default'
+        size='lg'
+        className='cursor-pointer'
+        disabled={!myname}
+        onMouseDown={() => {
+          toDashboard();
+        }}
+      >
+        Battle!
+      </Button>
     </div>
   );
 }

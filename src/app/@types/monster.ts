@@ -34,8 +34,8 @@ export type MonsterStats = {
 
 export type Monster = SourceMonster & {
   mysteryName: string;
-  baseStats: MonsterStats;
-  currentStats: MonsterStats;
+  baseStats?: MonsterStats;
+  currentStats?: MonsterStats;
 }
 
 export type MonsterUser = Monster & {

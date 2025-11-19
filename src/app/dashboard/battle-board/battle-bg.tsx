@@ -13,11 +13,8 @@ export function BattleBg() {
 
     const interval = setInterval(function () {
       x -= speed;
-      // y+=speed;
-      // y+=speed;
       x %= 10000;
       y %= 10000;
-      // setCss('background-position:' + x + 'px ' + y + 'px');
       setCss('' + x + 'px ' + y + 'px');
     }, 10);
 
@@ -25,22 +22,6 @@ export function BattleBg() {
       clearInterval(interval);
     };
   }, []);
-
-  // useEffect(() => {
-  //   let pulse = 0.0;
-
-  //   const interval = setInterval(function(){
-  //     pulse %= 1.05;
-  //     pulse += 0.1;
-  //     pulse = Math.max(1, pulse);
-  //     setCss(`scale(${pulse})`);
-  //   }, 1500);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
-
   return (
     <div
       className={cn(`

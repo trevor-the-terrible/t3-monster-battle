@@ -1,6 +1,6 @@
 'use client';
 
-import { page, cn } from '@/app/utils/styles';
+import { pageStyle, cn } from '@/app/utils/styles';
 import { useRouter } from 'next/navigation';
 import ldb, { type BattleHistory } from '@/app/services/ldb';
 import { useState, useEffect } from 'react';
@@ -10,14 +10,11 @@ import NextLink from 'next/link';
 import { BattleBoard } from './battle-board';
 
 export default function Dash() {
-  const [loading, setLoading] = useState(true);
   const [firstPick, setFirstPick] = useState<MonsterUser | null>(null);
   const [shadowMonster, setShadowMonster] = useState<Monster | null>(null);
   const [activeBattles, setActiveBattles] = useState<BattleHistory[]>([]);
 
   useEffect(() => {
-    setLoading(false);
-
     const firstPick = ldb.getFirstPick();
     if (!firstPick) {
       setShadowMonster(ldb.getRandomMysteryMonster());
@@ -39,13 +36,9 @@ export default function Dash() {
     setActiveBattles(activeBattles);
   }, []);
 
-  if (loading) {
-    return <>&nbsp;</>
-  }
-
   if (!firstPick) {
     return (
-      <div className={cn(page)}>
+      <div className={cn(pageStyle)}>
         {shadowMonster && (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -67,7 +60,7 @@ export default function Dash() {
   }
 
   return (
-    <div className={cn(page, 'p-12')}>
+    <div className={cn(pageStyle, 'p-12')}>
       {activeBattles.map((battle) => (
         <BattleBoard
           key={battle.id}

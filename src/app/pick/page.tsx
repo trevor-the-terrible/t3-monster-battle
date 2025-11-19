@@ -5,7 +5,7 @@ import { api } from '@/trpc/react';
 import { ChevronRight } from 'lucide-react';
 import NextLink from 'next/link';
 import { type Monster } from '@/app/@types';
-import { Loader } from '@/app/_components/loader';
+import { Loader } from '@/app/shared-components/loader';
 import ldb from '@/app/services/ldb';
 import { Button } from '@/components/ui/button';
 import {

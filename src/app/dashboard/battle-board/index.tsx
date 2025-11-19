@@ -83,8 +83,8 @@ export function BattleBoard({
       <BattleBg />
 
       <CardHeader className='z-10'>
-        <CardTitle className='text-center'>
-          <strong>{user.myname}</strong> vs <strong>{cpu.name}</strong>
+        <CardTitle className='text-center text-xl'>
+          <strong className='text-2xl'>{user.myname}</strong> <em>vs</em> <strong className='text-2xl'>{cpu.name}</strong>
         </CardTitle>
       </CardHeader>
 
@@ -113,19 +113,10 @@ export function BattleBoard({
           variant='neutral'
           cooldown={5000}
           onCooldownStart={() => {
-            // userStats.speed = userStats.speed - 300;
-            // userStats.effects.add('boost');
-            // setUserStats({
-            //   ...userStats,
-            // });
             applyEffect('boost', userStats, setUserStats);
           }}
           onCooldownEnd={() => {
             removeEffect('boost', userStats, setUserStats);
-            // userStats.effects.delete('boost');
-            // setUserStats({
-            //   ...userStats,
-            // });
           }}
         >
           Boost

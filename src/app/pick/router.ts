@@ -1,14 +1,11 @@
 // import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from '@/server/api/trpc';
-import getName from '@/app/services/get-random-name';
+import getName from '@/app/utils/get-random-name';
 import type { Monster, PokemonDetail } from '@/app/@types';
 import monsterCloset from './monster-closet';
 
 export const pickRouter = createTRPCRouter({
   fetchMonsters: publicProcedure
-    // .input(z.object({
-    //   limit: z.number().min(1).max(500).default(8),
-    // }))
     .query(async ({ input }) => {
       const cachedMonsters = await monsterCloset.load();
       if (cachedMonsters?.length > 0) {
@@ -34,8 +31,6 @@ export const pickRouter = createTRPCRouter({
         previous: string | null;
         results: { name: string; url: string }[];
       };
-
-      // await timers.setTimeout(5 * 1000);
 
       const populateMonsters = data.results
         .map(async (monster) => {
