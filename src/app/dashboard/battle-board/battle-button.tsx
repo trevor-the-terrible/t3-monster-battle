@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shadcn/components/ui/button';
 import { cn } from '@/app/utils/styles';
 import { useEffect, useState, useMemo } from 'react';
 

@@ -10,7 +10,7 @@ import {
   CardTitle,
   CardContent,
   CardFooter,
-} from '@/components/ui/card';
+} from '@/shadcn/components/ui/card';
 import { BattleBg } from '@/app/dashboard/battle-board/battle-bg';
 import { BattleButton } from '@/app/dashboard/battle-board/battle-button';
 import { applyEffect, removeEffect, EffectSwatches } from './effects';

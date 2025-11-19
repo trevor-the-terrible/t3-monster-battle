@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import ldb, { type BattleHistory } from '@/app/services/ldb';
 import { useState, useEffect } from 'react';
 import type { Monster, MonsterUser } from '@/app/@types';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shadcn/components/ui/button';
 import NextLink from 'next/link';
 import { BattleBoard } from './battle-board';
 

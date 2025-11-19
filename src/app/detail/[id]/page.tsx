@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import ldb from '@/app/services/ldb';
 import { cn } from '@/app/utils/styles';
 import { useParams, useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Input } from '@/shadcn/components/ui/input';
+import { Button } from '@/shadcn/components/ui/button';
 import { type MonsterUser } from '@/app/@types';
 import { useDebouncedCallback } from 'use-debounce';
 

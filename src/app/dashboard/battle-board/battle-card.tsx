@@ -1,6 +1,6 @@
 import type { MonsterUser, MonsterStats } from '@/app/@types';
 import { Icon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shadcn/lib/utils';
 import { useState, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { Stats } from './stats';
 import { availableEffects } from './effects';

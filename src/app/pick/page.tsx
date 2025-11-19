@@ -7,12 +7,12 @@ import NextLink from 'next/link';
 import { type Monster } from '@/app/@types';
 import { Loader } from '@/app/shared-components/loader';
 import ldb from '@/app/services/ldb';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shadcn/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
-} from '@/components/ui/card';
+} from '@/shadcn/components/ui/card';
 
 export default function Pick() {
   const [monsters, setMonsters] = useState<Monster[]>([]);
